@@ -1,0 +1,4 @@
+org.springframework.test.context.ContextCustomizerFactory = com.divep.\
+    impordivep.config.SqlTestContainersSpringContextCustomizerFactory,com.divep.\
+    impordivep.config.TestContainersSpringContextCustomizerFactory,com.divep.\
+    impordivep.config.KafkaTestContainersSpringContextCustomizerFactory

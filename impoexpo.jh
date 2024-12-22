@@ -1,0 +1,87 @@
+entity Entidad {
+    descripcion String required
+    actividad String
+    direccion String
+    codenit Long required
+    codemincex String required
+    telefono Long
+    email String
+    ciOnat ImageBlob
+    vectorFiscalOnat ImageBlob required
+    contratoBancoAperturaCuentas ImageBlob required
+ 
+}
+entity Cliente {
+tipo String
+
+}
+
+entity Perfil {
+ nombre String required
+  apellidos String required
+  ci Long required
+  telefono Long
+  email String
+}
+entity Provedor {
+ denominacion String required
+  pais String
+  identificado Boolean
+  email String
+}
+entity Gestora {
+ denominacion String required
+  direccion String
+  coordenasas String
+  email String
+}
+entity FormaPago {
+ tipo String
+}
+
+entity Almacen {
+ denominacion String required
+  direccion String
+}
+entity Oferta {
+ denominacion String
+  url AnyBlob required
+}
+entity Solicitud {
+ denominacion String required
+  fechasolicitud ZonedDateTime
+  fechatramite ZonedDateTime
+  fechaaprobada ZonedDateTime
+  presupuesto Long
+  estadoSolicitud EstadoSolicitud
+  
+}
+
+
+relationship OneToOne {
+	Solicitud{almacen} to Almacen
+    Entidad{cliente(tipo)} to Cliente
+    Perfil{user(login)} to User
+}
+
+enum EstadoSolicitud {
+    CREADA, PENDIENTE, APROBADA, CERRADA
+}
+
+relationship OneToMany {
+ Entidad to Perfil{entidad(descripcion)}
+ Solicitud to Oferta
+ Solicitud{formaPago(tipo)} to FormaPago
+ Gestora to Entidad{gestora(denominacion)}
+ Entidad{provedor(denominacion)} to Provedor
+ Perfil to Solicitud{perfil}
+
+ 
+}
+
+
+// Set pagination options
+search Solicitud, Perfil, Oferta, Provedor, Entidad with elasticsearch
+filter Solicitud, Entidad, Perfil
+// Set an angular suffix
+// angularSuffix * with mySuffix
